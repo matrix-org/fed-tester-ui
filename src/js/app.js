@@ -86,6 +86,7 @@ let App = create({
     return (
       <div className="block">
         <a href="https://neo.lain.haus" target="_blank"><img src={neo}/></a>
+        <span id="jok">Unlike the name suggests, this won't help you find three letter agencies :P</span>
         <div className="input">
           <input ref={this.setRef}/>
           <div className={"sk-cube-grid " + active} onClick={this.submit}>

@@ -20,12 +20,19 @@ html, body {
 }
 
 .block {
-  #jok {
+  .text {
     position: absolute;
     left: 0;
     top: 0;
-    color: lighten($fg, 10);
     padding: 4px;
+
+    #jok {
+      color: lighten($fg, 10);
+    }
+
+    a {
+      color: #0080b3;
+    }
   }
 
   img {

@@ -11,6 +11,7 @@ let create = require('create-react-class');
 let urllib = require('url');
 let apiUrl = urllib.parse("https://neo.lain.haus/api/report");
 let neo = require('../assets/neo_full_bg.png');
+const icons = require('./icons.js');
 
 let options = {retries: 5, retryDelay: 200};
 
@@ -190,19 +191,28 @@ let ReportTable = create({
     let checks = <TableFromObject object={this.props.info.Checks} collapsed={this.state.collapsed} tree={1}/>;
     let symbol = "Error";
     let className = "false";
+    let icon = icons.right;
+
+    if (!this.state.collapsed) {
+      icon = icons.down;
+    }
+
     if (this.props.info.Checks.AllChecksOK) {
       symbol = "Success";
       className = "true";
     }
+
     return (
       <div>
         <h3>{this.props.ip}</h3>
         <div className="table">
           <div className="head">
+            {icon}
             Check
           </div>
           <div className="body">
             <div className="row toggle" onClick={this.toggle}>
+              {icon}
               <div className="col">All Checks OK</div>
               <div className={"col bool " + className}>{symbol}</div>
             </div>

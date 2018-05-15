@@ -19,6 +19,17 @@ html, body {
   border: none;
 }
 
+.icon {
+  height: 3rem;
+  margin-left: 5px;
+  margin-top: 2px;
+  vertical-align: text-bottom;
+}
+
+.head .icon {
+  opacity: 0;
+}
+
 .block {
   .text {
     position: absolute;

@@ -67,14 +67,15 @@ let App = create({
     let active;
 
     if (this.state.json != undefined) {
-      if (this.state.json.DNSResult.SRVRecords != undefined) {
+      if (this.state.json != undefined) {
         result = <TestResults json={this.state.json}/>;
       }
 
-      if (this.state.json.DNSResult.SRVError != undefined) {
+      if (Object.keys(this.state.json.ConnectionReports) == 0 &&
+        Object.keys(this.state.json.ConnectionReports) == 0) {
         errors = (
           <div className="error">
-            {this.state.json.DNSResult.SRVError.Message}
+            Probably not a matrix server
           </div>
         );
       }
@@ -286,6 +287,14 @@ let DNSResult = create({
 
   render: function() {
     let j = this.props.json;
+    if (j.SRVRecords == null) {
+      return (
+        <div className="dns">
+          <h2>No SRV Records</h2>
+        </div>
+      );
+    }
+
     let records = j.SRVRecords.map((record, id) => {
       return (
         <div className="row" key={id}>

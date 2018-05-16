@@ -32,6 +32,16 @@ let App = create({
     });
   },
 
+  componentDidMount: function() {
+    setTimeout(() => {
+      if (window.location.hash) {
+        var hash = window.location.hash.substring(1);
+        this.state.ref.value = hash;
+        this.submit();
+      }
+    }, 100);
+  },
+
   onKey: function(e) {
     if (e.keyCode == 13) {
       this.submit();

@@ -61,7 +61,6 @@ let App = create({
     rfetch(urllib.format(url), options)
       .then((res) => res.json())
       .then((json) => {
-        json.ConnectionReports["78.46.203.123:8448"].Checks.Ed25519Checks["ed25519:a_kwTP"].MatchingSignature = false
         let errors = []
         Object.keys(json.ConnectionReports).forEach((ip) => {
           if (!json.ConnectionReports[ip].ValidCertificates) {
@@ -121,7 +120,7 @@ let App = create({
         <div className="text">
           <span id="jok">unlike the name suggests, this won't help you find three letter agencies :p</span><br/>
           However, it might help you debug your Matrix instance<br/><br/>
-          <a href="https://git.lain.haus/f0x/fed-tester">sourcecode on github</a>
+        Made with love by <a href="https://f.0x52.eu">f0x</a>, sourcecode <a href="https://git.lain.haus/f0x/fed-tester">here</a>
         </div>
         <div className="input">
           <input ref={this.setRef}/>

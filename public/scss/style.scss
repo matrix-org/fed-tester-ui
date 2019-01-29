@@ -1,62 +1,75 @@
-$fg: #383838;
+$bg:  #1b1b1b;
+$bg0: #2c2c2c;
+
+$red: #B00020;
+$green: #36b300;
 
 @font-face {
-  font-family: "Roboto";
-  src: url("../assets/fonts/Roboto-Regular.ttf") format("truetype");
+  font-family: "Roboto Mono";
+  src: url(RobotoMono-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto Mono Bold";
+  src: url(RobotoMono-Bold.ttf) format("truetype");
 }
 
 html, body {
   margin: 0;
-  font-family: "Roboto";
-  background-color: #f5f5f5;
-  color: $fg;
+  padding: 0;
+  background: $bg;
+  color: white;
+  font-family: "Roboto Mono", monospace;
 }
 
-.block, .error {
-  width: 80vw;
-  margin: 10vh 10vw;
-  margin-bottom: 1.5rem;
-  border: none;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
 }
 
 .icon {
-  height: 3rem;
-  margin-left: 5px;
-  margin-top: 2px;
+  height: 1.5rem;
+  padding: .875rem;
+  padding-right: 0;
   vertical-align: text-bottom;
+}
+
+a {
+  color: white;
+}
+
+.input {
+  margin: 2rem 0;
+}
+
+input {
+  background: $bg0;
+  border: none;
+  height: 2.5rem;
+  box-sizing: border-box;
+  padding-left: .75rem;
+  color: white;
+}
+
+.jsonError {
+  color: lighten($red, 20);
+  padding: 0.4rem 0;
+}
+
+.block, .error {
+  width: 90vw;
+  margin-bottom: 3rem;
+  border: none;
 }
 
 .head .icon {
   opacity: 0;
 }
 
-.block {
-  .text {
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding: 4px;
-
-    #jok {
-      color: lighten($fg, 10);
-    }
-
-    a {
-      color: #0080b3;
-    }
-  }
-
-  img {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 15vh;
-  }
-}
-
-.error {
-  font-size: 150%;
-  color: #B00020;
+.connection, .dns {
+  margin: 3rem 0;
 }
 
 .dns {
@@ -73,7 +86,7 @@ html, body {
 }
 
 .connection.err {
-  color: #B00020;
+  color: $red;
 }
 
 .table {
@@ -82,7 +95,7 @@ html, body {
   width: 100%;
 
   .row, .head {
-    background-color: #fff;
+    background-color: $bg0;
     margin-bottom: 1rem;
     text-align: left;
     display: flex;
@@ -99,7 +112,7 @@ html, body {
 
   .col {
     flex: 1 1 auto;
-    padding: 1rem 1.5rem;
+    padding: 1rem;
   }
 
   .bool {
@@ -118,11 +131,11 @@ html, body {
   }
 
   .true {
-    background: #36b300;
+    background: $green;
   }
 
   .false {
-    background: #B00020;
+    background: $red;
   }
 
   .tree-1 {
@@ -139,34 +152,22 @@ html, body {
 
 }
 
-input {
-  border: none;
-  font-size: calc(1.4rem + 2px);
-  padding: 15px;
-  background: #fff;
-  box-shadow: 0 1px 1px rgba(0,0,0,.15);
-}
-
-h2, h3 {
-  margin-top: 3rem;
-  margin-bottom: 0;
-}
 
 .sk-cube-grid {
   display: inline-block;
-  width: calc(1.4rem + 37px);
-  height: calc(1.4rem + 37px);
+  width: 2.5rem;
+  height: 2.5rem;
   vertical-align: top;
   position: relative;
   box-shadow: 0 1px 1px rgba(0,0,0,.15);
 
   span {
     position: absolute;
-    line-height: calc(1.4rem + 31px);
+    line-height: 2.5rem;
     width: 100%;
     left: 0;
     text-align: center;
-    color: white;
+    color: $bg0;
     cursor: pointer;
     z-index: 2;
   }
@@ -174,7 +175,7 @@ h2, h3 {
   .sk-cube {
     width: (100% / 3);
     height: (100% / 3);
-    background-color: #0080b3;
+    background-color: white;
     float: left;
   }
 }
@@ -186,7 +187,7 @@ h2, h3 {
 
   .sk-cube {
     -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
 
     .sk-cube1 {
       -webkit-animation-delay: 0.2s;
@@ -216,17 +217,17 @@ h2, h3 {
       -webkit-animation-delay: 0.2s;
               animation-delay: 0.2s; }
   }
-  
+
   @-webkit-keyframes sk-cubeGridScaleDelay {
     0%, 70%, 100% {
       -webkit-transform: scale3D(1, 1, 1);
               transform: scale3D(1, 1, 1);
     } 35% {
       -webkit-transform: scale3D(0, 0, 1);
-              transform: scale3D(0, 0, 1); 
+              transform: scale3D(0, 0, 1);
     }
   }
-  
+
   @keyframes sk-cubeGridScaleDelay {
     0%, 70%, 100% {
       -webkit-transform: scale3D(1, 1, 1);
@@ -234,6 +235,6 @@ h2, h3 {
     } 35% {
       -webkit-transform: scale3D(0, 0, 1);
               transform: scale3D(0, 0, 1);
-    } 
+    }
   }
 }

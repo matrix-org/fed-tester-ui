@@ -1,36 +1,51 @@
 {
   "name": "fed-tester",
   "version": "1.0.0",
-  "description": "Frontend for matrix-federation-tester",
+  "description": "Matrix Federation test frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.lain.haus/f0x/fed-tester"
+  },
+  "keywords": [
+    "matrix",
+    "federation"
+  ],
   "author": "f0x",
   "license": "AGPL-3.0",
-  "scripts": {
-    "build": "webpack",
-    "dev": "webpack-dev-server"
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "create-react-class": "^15.6.3",
-    "css-loader": "^0.28.11",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "file-loader": "^1.1.11",
-    "html-webpack-plugin": "^3.1.0",
-    "node-sass": "^4.8.3",
-    "sass-loader": "^6.0.7",
-    "style-loader": "^0.20.3",
-    "webpack": "^4.4.1",
-    "webpack-cli": "^2.0.13",
-    "webpack-dev-server": "^3.1.1"
-  },
   "dependencies": {
-    "default-value": "^1.0.0",
-    "eslint": "^4.19.1",
-    "eslint-plugin-react": "^7.7.0",
-    "fetch-retry": "^1.2.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babelify": "^10.0.0",
+    "bluebird": "^3.5.3",
+    "browserify": "^16.2.3",
+    "budo": "^11.5.0",
+    "create-react-class": "^15.6.3",
+    "debounce": "^1.2.0",
+    "del": "^3.0.0",
+    "fetch-retry": "^2.0.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-cache": "^1.1.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-copy": "^4.0.1",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-util": "^3.0.8",
+    "jdenticon": "^2.1.1",
+    "livereactload": "^4.0.0-beta.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "webpack": "^4.27.1"
   }
 }

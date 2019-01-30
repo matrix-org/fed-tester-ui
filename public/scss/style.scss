@@ -173,6 +173,10 @@ input {
 
 }
 
+.infoRow .false, .infoRow .true {
+  background: lighten($bg0, 10);
+}
+
 
 .sk-cube-grid {
   display: inline-block;

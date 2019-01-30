@@ -236,7 +236,8 @@ let ReportTable = create({
   render: function() {
     let checks = <TableFromObject object={this.props.info.Checks} collapsed={this.state.collapsed.checks} tree={1} type="error" />;
     let info = <TableFromObject object={this.props.info.Info} collapsed={this.state.collapsed.info} tree={1} type="info" />;
-    let icon = icons.right;
+    let checksIcon = icons.right;
+    let infoIcon = icons.right;
 
     let falseRow = {
       symbol: "Error",
@@ -256,8 +257,12 @@ let ReportTable = create({
       }
     }
 
-    if (!this.state.collapsed) {
-      icon = icons.down;
+    if (!this.state.collapsed["checks"]) {
+      checksIcon = icons.down;
+    }
+
+    if (!this.state.collapsed["info"]) {
+      infoIcon = icons.down;
     }
 
     if (this.props.info.Checks.AllChecksOK) {
@@ -278,13 +283,13 @@ let ReportTable = create({
               <div className={"col bool " + rows.cert.className}>{rows.cert.symbol}</div>
             </div>
             <div className="row toggle" onClick={() => this.toggle("info")}>
-              {icon}
+              {infoIcon}
               <div className="col">Information</div>
               <div className="col bool info">Information</div>
             </div>
             {info}
             <div className="row toggle" onClick={() => this.toggle("checks")}>
-              {icon}
+              {checksIcon}
               <div className="col">Other Checks</div>
               <div className={"col bool " + rows.checks.className}>{rows.checks.symbol}</div>
             </div>
@@ -365,7 +370,7 @@ let TableFromObject = create({
       } else if (!this.props.collapsed) {
         if (typeof(this.props.object[check]) == "boolean") {
           return (
-            <div className={"row toggle tree-" + this.props.tree} key={id}>
+            <div className={`row toggle tree-${this.props.tree} ${this.props.type}Row`} key={id}>
               <div className="col">{check}</div>
               <div className={"col bool " + className}>{symbol}</div>
             </div>

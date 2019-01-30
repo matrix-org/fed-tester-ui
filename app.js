@@ -1,4 +1,8 @@
 'use strict'
+
+// Disclaimer: this code is quite messy, and will need a rewrite sometime
+// read at your own risk ;)
+
 const React = require('react')
 const ReactDOM = require('react-dom')
 const create = require('create-react-class')
@@ -61,23 +65,35 @@ let App = create({
     rfetch(urllib.format(url), options)
       .then((res) => res.json())
       .then((json) => {
-        let errors = []
+        // The tldr block will be displayed before the full table
+        let tldr = []
         Object.keys(json.ConnectionReports).forEach((ip) => {
-          if (!json.ConnectionReports[ip].ValidCertificates) {
-            errors.push(<div className="jsonError" key={`cert-${errors.length}`}>
-              Invalid self-signed cert found for {ip}
+          let report = json.ConnectionReports[ip]
+          if (!report.ValidCertificates) {
+            tldr.push(<div className="warning" key={`cert-${tldr.length}`}>
+              WARN: Self-signed cert found for {ip}, this will need to be replaced in the future <a href="https://github.com/matrix-org/matrix-doc/pull/1711">MSC1711</a>
             </div>)
           }
-          recursiveCheck(json.ConnectionReports[ip].Checks, "Checks", (path) => {
+
+          Object.keys(report.Info).forEach((infoKey) => {
+            let bool = report.Info[infoKey]
+            if (!bool) {
+              tldr.push(<div className="info" key={`cert-${tldr.length}`}>
+                INFO: No {infoKey} for {ip}
+              </div>)
+            }
+          })
+
+          recursiveCheck(report.Checks, "Checks", (path) => {
             // Found an error
-            errors.push(<div className="jsonError" key={`${path}-${errors.length}`}>
-              Error found for {ip}: {path}
+            tldr.push(<div className="error" key={`${path}-${tldr.length}`}>
+              ERROR: on {ip}: {path} failed
             </div>)
           })
         })
         this.setState({
           json: json,
-          jsonErrors: errors,
+          tldr: tldr,
           loading: false
         })
       })
@@ -102,14 +118,11 @@ let App = create({
         )
       } else {
         result = <>
-          Got {reportCount} connection report
-          {reportCount > 1 && <>s</>}
-          {this.state.jsonErrors.length > 0 &&
-            <> and {this.state.jsonErrors.length} error
-              {this.state.jsonErrors.length > 1 && <>s</>}
-          </>}
+          Got {reportCount} connection report{reportCount > 1 && <>s</>}
 
-          {this.state.jsonErrors}
+          <div className="tldr">
+            {this.state.tldr}
+          </div>
           <TestResults json={this.state.json}/>
         </>
       }
@@ -205,24 +218,24 @@ let ReportTable = create({
 
   getInitialState: function() {
     return ({
-      collapsed: this.props.info.Checks.AllChecksOK
+      collapsed: {
+        info: true,
+        checks: this.props.info.Checks.AllChecksOK
+      }
     });
   },
 
-  toggle: function() {
-    let collapsed = this.state.collapsed;
-    if (collapsed) {
-      collapsed = false;
-    } else {
-      collapsed = true;
-    }
+  toggle: function(element) {
+    let collapsed = this.state.collapsed
+    collapsed[element] = !collapsed[element]
     this.setState({
       collapsed: collapsed
     });
   },
 
   render: function() {
-    let checks = <TableFromObject object={this.props.info.Checks} collapsed={this.state.collapsed} tree={1}/>;
+    let checks = <TableFromObject object={this.props.info.Checks} collapsed={this.state.collapsed.checks} tree={1} type="error" />;
+    let info = <TableFromObject object={this.props.info.Info} collapsed={this.state.collapsed.info} tree={1} type="info" />;
     let icon = icons.right;
 
     let falseRow = {
@@ -237,7 +250,10 @@ let ReportTable = create({
 
     let rows = {
       checks: falseRow,
-      cert: falseRow
+      cert: {
+        symbol: "Warning",
+        className: "warn"
+      }
     }
 
     if (!this.state.collapsed) {
@@ -261,7 +277,13 @@ let ReportTable = create({
               <div className="col">Valid Certificate</div>
               <div className={"col bool " + rows.cert.className}>{rows.cert.symbol}</div>
             </div>
-            <div className="row toggle" onClick={this.toggle}>
+            <div className="row toggle" onClick={() => this.toggle("info")}>
+              {icon}
+              <div className="col">Information</div>
+              <div className="col bool info">Information</div>
+            </div>
+            {info}
+            <div className="row toggle" onClick={() => this.toggle("checks")}>
               {icon}
               <div className="col">Other Checks</div>
               <div className={"col bool " + rows.checks.className}>{rows.checks.symbol}</div>
@@ -320,11 +342,22 @@ let TableFromObject = create({
   render: function() {
     let objectArray = Object.keys(this.props.object);
     return objectArray.map((check, id) => {
-      let symbol = "Error";
-      let className = "false";
-      if (this.props.object[check]) {
-        symbol = "Success";
-        className = "true";
+      let symbol
+      let className
+      if (this.props.type == "error") {
+        symbol = "Error";
+        className = "false";
+        if (this.props.object[check]) {
+          symbol = "Success";
+          className = "true";
+        }
+      } else if (this.props.type == "info") {
+        symbol = "No";
+        className = "false";
+        if (this.props.object[check]) {
+          symbol = "Yes";
+          className = "true";
+        }
       }
 
       if (check == "AllChecksOK") {

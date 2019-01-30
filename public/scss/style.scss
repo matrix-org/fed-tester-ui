@@ -3,6 +3,8 @@ $bg0: #2c2c2c;
 
 $red: #B00020;
 $green: #36b300;
+$orange: #b35f00;
+$blue: #008fb3;
 
 @font-face {
   font-family: "Roboto Mono";
@@ -53,9 +55,20 @@ input {
   color: white;
 }
 
-.jsonError {
-  color: lighten($red, 20);
+.tldr div {
   padding: 0.4rem 0;
+}
+
+.tldr .error {
+  color: lighten($red, 20);
+}
+
+.tldr .warning {
+  color: lighten($orange, 20);
+}
+
+.tldr .info {
+  color: lighten($blue, 20);
 }
 
 .block, .error {
@@ -136,6 +149,14 @@ input {
 
   .false {
     background: $red;
+  }
+
+  .warn {
+    background: $orange;
+  }
+
+  .info {
+    background: $blue;
   }
 
   .tree-1 {

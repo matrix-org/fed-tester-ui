@@ -131,8 +131,8 @@ let App = create({
     return (
       <div className="block">
         <div className="text">
-          <span id="jok">unlike the name suggests, this won't help you find three letter agencies :p</span><br/>
-          However, it might help you debug your Matrix instance<br/><br/>
+          The Matrix Federation Tester can help debug your Matrix instance.<br />
+          Enter your homeserver hostname in the field below, then hit "Go" to get your report.<br/><br/>
           Made with love by <a href="https://f.0x52.eu">f0x</a>, sourcecode <a href="https://git.lain.haus/f0x/fed-tester">here</a>, powered by the <a href="https://github.com/matrix-org/matrix-federation-tester">matrix-federation-tester</a> backend <br/>
       <a href="https://liberapay.com/f0x/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"/></a>
         </div>

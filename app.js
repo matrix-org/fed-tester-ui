@@ -74,13 +74,6 @@ let App = create({
               WARN: Self-signed cert found for {ip}, this will need to be replaced in the future <a href="https://github.com/matrix-org/matrix-doc/pull/1711">MSC1711</a>
             </div>)
           }
-
-          recursiveCheck(report.Checks, "Checks", (path) => {
-            // Found an error
-            tldr.push(<div className="error" key={`${path}-${tldr.length}`}>
-              ERROR: on {ip}: {path} failed
-            </div>)
-          })
         })
         this.setState({
           json: json,

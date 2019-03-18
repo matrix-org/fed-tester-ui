@@ -75,15 +75,6 @@ let App = create({
             </div>)
           }
 
-          Object.keys(report.Info).forEach((infoKey) => {
-            let bool = report.Info[infoKey]
-            if (!bool) {
-              tldr.push(<div className="info" key={`cert-${tldr.length}`}>
-                INFO: No {infoKey} for {ip}
-              </div>)
-            }
-          })
-
           recursiveCheck(report.Checks, "Checks", (path) => {
             // Found an error
             tldr.push(<div className="error" key={`${path}-${tldr.length}`}>

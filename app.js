@@ -76,6 +76,13 @@ let App = create({
               documentation</a> for instructions on how to fix this.
             </div>)
           }
+          json.ConnectionReports[ip].Errors.forEach((err) => {
+              let msg = err.Message
+              // Found an error
+              tldr.push(<div className="error" key={`${msg}-${tldr.length}`}>
+                ERROR: on {ip}: {msg}
+              </div>)
+          })
         })
         this.setState({
           json: json,

@@ -69,9 +69,11 @@ let App = create({
         let tldr = []
         Object.keys(json.ConnectionReports).forEach((ip) => {
           let report = json.ConnectionReports[ip]
-          if (!report.ValidCertificates) {
+          if (!report.Checks.ValidCertificates) {
             tldr.push(<div className="warning" key={`cert-${tldr.length}`}>
-              WARN: Self-signed cert found for {ip}, this will need to be replaced in the future <a href="https://github.com/matrix-org/matrix-doc/pull/1711">MSC1711</a>
+              WARN: Could not find a valid certificate for {ip}.
+              See <a href="https://github.com/matrix-org/synapse/blob/master/docs/MSC1711_certificates_FAQ.md#configuring-certificates-for-compatibility-with-synapse-100">this
+              documentation</a> for instructions on how to fix this.
             </div>)
           }
         })
@@ -254,7 +256,7 @@ let ReportTable = create({
       rows.checks = trueRow
     }
 
-    if (this.props.info.ValidCertificates) {
+    if (this.props.info.Checks.ValidCertificates) {
       rows.cert = trueRow
     }
 
@@ -263,10 +265,6 @@ let ReportTable = create({
         <h3>{this.props.ip}</h3>
         <div className="table">
           <div className="body">
-            <div className="row">
-              <div className="col">Valid Certificate</div>
-              <div className={"col bool " + rows.cert.className}>{rows.cert.symbol}</div>
-            </div>
             <div className="row toggle" onClick={() => this.toggle("info")}>
               {infoIcon}
               <div className="col">Information</div>

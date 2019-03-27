@@ -69,7 +69,7 @@ let App = create({
         let tldr = []
         Object.keys(json.ConnectionReports).forEach((ip) => {
           let report = json.ConnectionReports[ip]
-          if (!report.ValidCertificates) {
+          if (!report.Checks.ValidCertificates) {
             tldr.push(<div className="warning" key={`cert-${tldr.length}`}>
               WARN: Self-signed cert found for {ip}, this will need to be replaced in the future <a href="https://github.com/matrix-org/matrix-doc/pull/1711">MSC1711</a>
             </div>)
@@ -254,7 +254,7 @@ let ReportTable = create({
       rows.checks = trueRow
     }
 
-    if (this.props.info.ValidCertificates) {
+    if (this.props.info.Checks.ValidCertificates) {
       rows.cert = trueRow
     }
 

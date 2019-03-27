@@ -71,7 +71,8 @@ let App = create({
           let report = json.ConnectionReports[ip]
           if (!report.Checks.ValidCertificates) {
             tldr.push(<div className="warning" key={`cert-${tldr.length}`}>
-              WARN: Could not find a valid certificate for {ip}. This will cause federation to stop working as soon as <a href="https://github.com/matrix-org/matrix-doc/pull/1711">MSC1711</a> starts being enforced and must be fixed soon. See <a href="https://github.com/matrix-org/synapse/blob/master/docs/MSC1711_certificates_FAQ.md#configuring-certificates-for-compatibility-with-synapse-100">this documentation</a> for instructions on how to fix it.
+              WARN: Could not find a valid certificate for {ip}.
+              See <a href="https://github.com/matrix-org/synapse/blob/master/docs/MSC1711_certificates_FAQ.md#configuring-certificates-for-compatibility-with-synapse-100">this documentation</a> for instructions on how to fix this.
             </div>)
           }
         })

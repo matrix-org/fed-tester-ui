@@ -71,7 +71,7 @@ let App = create({
           let report = json.ConnectionReports[ip]
           if (!report.Checks.ValidCertificates) {
             tldr.push(<div className="warning" key={`cert-${tldr.length}`}>
-              WARN: Self-signed cert found for {ip}, this will need to be replaced in the future <a href="https://github.com/matrix-org/matrix-doc/pull/1711">MSC1711</a>
+              WARN: Couldn't find a valid certificate for {ip}, this will need to be fixed in the future as per <a href="https://github.com/matrix-org/matrix-doc/pull/1711">MSC1711</a>
             </div>)
           }
         })

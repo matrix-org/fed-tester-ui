@@ -229,9 +229,7 @@ let ReportTable = create({
 
   render: function() {
     let checks = <TableFromObject object={this.props.info.Checks} collapsed={this.state.collapsed.checks} tree={1} type="error" />;
-    let info = <TableFromObject object={this.props.info.Info} collapsed={this.state.collapsed.info} tree={1} type="info" />;
     let checksIcon = icons.right;
-    let infoIcon = icons.right;
 
     let falseRow = {
       symbol: "Error",
@@ -255,10 +253,6 @@ let ReportTable = create({
       checksIcon = icons.down;
     }
 
-    if (!this.state.collapsed["info"]) {
-      infoIcon = icons.down;
-    }
-
     if (this.props.info.Checks.AllChecksOK) {
       rows.checks = trueRow
     }
@@ -272,15 +266,9 @@ let ReportTable = create({
         <h3>{this.props.ip}</h3>
         <div className="table">
           <div className="body">
-            <div className="row toggle" onClick={() => this.toggle("info")}>
-              {infoIcon}
-              <div className="col">Information</div>
-              <div className="col bool info">Information</div>
-            </div>
-            {info}
             <div className="row toggle" onClick={() => this.toggle("checks")}>
               {checksIcon}
-              <div className="col">Other Checks</div>
+              <div className="col">Checks</div>
               <div className={"col bool " + rows.checks.className}>{rows.checks.symbol}</div>
             </div>
             {checks}
@@ -344,13 +332,6 @@ let TableFromObject = create({
         className = "false";
         if (this.props.object[check]) {
           symbol = "Success";
-          className = "true";
-        }
-      } else if (this.props.type == "info") {
-        symbol = "No";
-        className = "false";
-        if (this.props.object[check]) {
-          symbol = "Yes";
           className = "true";
         }
       }

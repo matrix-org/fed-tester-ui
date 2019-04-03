@@ -103,22 +103,15 @@ let App = create({
 
     if (this.state.json != undefined) {
       let reportCount = Object.keys(this.state.json.ConnectionReports).length
-      if (reportCount == 0) {
-        errors = (
-          <div className="error">
-            No connection reports, is this even a matrix server?
-          </div>
-        )
-      } else {
-        result = <>
-          Got {reportCount} connection report{reportCount > 1 && <>s</>}
+      result = <>
+        Got {reportCount} connection report{reportCount > 1 && <>s</>}.
+        {reportCount == 0 && <> This usually means at least one error happened.</>}
 
-          <div className="tldr">
-            {this.state.tldr}
-          </div>
-          <TestResults json={this.state.json}/>
-        </>
-      }
+        <div className="tldr">
+          {this.state.tldr}
+        </div>
+        <TestResults json={this.state.json}/>
+      </>
     }
 
     return (
@@ -170,6 +163,9 @@ let ConnectionReports = create({
 
   render: function() {
     let j = this.props.json;
+    if (Object.keys(j).length == 0) {
+      return null;
+    }
     let connections = Object.keys(j).map((ip, id) => {
       let info = j[ip];
       return <ReportTable info={info} key={id} ip={ip}/>;

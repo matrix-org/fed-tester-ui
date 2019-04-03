@@ -263,3 +263,11 @@ input {
     }
   }
 }
+
+.dns .error {
+  color: $red;
+}
+
+.dns .body.error {
+  color: lighten($red, 20);
+}

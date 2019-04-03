@@ -404,20 +404,58 @@ let DNSResult = create({
           <div className="col">{record.Target}</div>
           <div className="col">{record.Port}</div>
           <div className="col">{record.Priority}</div>
-          <div className="col">{record.Target}</div>
+          <div className="col">{record.Weight}</div>
         </div>
       );
     });
 
     let hosts = Object.keys(j.Hosts).map((host) => {
-      return j.Hosts[host].Addrs.map((address, id) => {
-        return (
-          <div className="row" key={id}>
-            <div className="col">{address}</div>
-          </div>
-        );
-      });
+      if (j.Hosts[host].Addrs != null) {
+        return j.Hosts[host].Addrs.map((address, id) => {
+          return (
+            <div className="row" key={id}>
+              <div className="col">{address}</div>
+            </div>
+          );
+        });
+      }
     });
+    hosts = hosts.filter((host) => host != undefined)
+
+    let hostErrors = Object.keys(j.Hosts).map((host) => {
+      if (j.Hosts[host].Error != null) {
+        return (
+          <div className="row" key={host}>
+            <div className="col">{j.Hosts[host].Error.Message}</div>
+          </div>
+        )
+      }
+    });
+    hostErrors = hostErrors.filter((error) => error != undefined)
+
+    let addresses;
+    if (hosts.length > 0) {
+      addresses = <>
+        <div className="head">
+          Addresses
+        </div>
+        <div className="body">
+          {hosts}
+        </div>
+      </>
+    }
+
+    let errors;
+    if (hostErrors.length > 0) {
+      errors = <>
+        <div className="head error">
+          Errors
+        </div>
+        <div className="body error">
+          {hostErrors}
+        </div>
+      </>
+    }
 
     return (
       <div className="dns">
@@ -427,19 +465,15 @@ let DNSResult = create({
             <span className="col">Target</span>
             <span className="col">Port</span>
             <span className="col">Priority</span>
-            <span className="col">Target</span>
+            <span className="col">Weight</span>
           </div>
           <div className="body">
             {records}
           </div>
         </div>
         <div className="table">
-          <div className="head">
-            Address
-          </div>
-          <div className="body">
-            {hosts}
-          </div>
+          {addresses}
+          {errors}
         </div>
       </div>
     );

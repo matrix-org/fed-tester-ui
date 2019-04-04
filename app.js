@@ -12,8 +12,7 @@ const urllib = require('url')
 
 const icons = require('./icons.js')
 
-let api = "https://matrix.org/federationtester/api/report"
-let apiUrl = urllib.parse(api)
+let apiUrl = urllib.parse("https://matrix.org/federationtester/api/report")
 let options = {retries: 5, retryDelay: 200}
 
 let App = create({
@@ -111,7 +110,7 @@ let App = create({
         <div className="tldr">
           {this.state.tldr}
         </div>
-        <TestResults json={this.state.json} serverName={this.state.ref.value.toLowerCase()}/>
+        <TestResults json={this.state.json}/>
       </>
     }
 
@@ -154,7 +153,7 @@ let TestResults = create({
         <ConnectionErrors json={this.props.json.ConnectionErrors}/>
         <ConnectionReports json={this.props.json.ConnectionReports}/>
         <DNSResult json={this.props.json.DNSResult}/>
-        <API serverName={this.props.serverName}/>
+        <API/>
       </div>
     );
   }
@@ -468,7 +467,7 @@ let API = create({
 
   render: function() {
     // Add API endpoint to the end
-    const url = api + "?server_name=" + this.props.serverName;
+    const url = urllib.format(apiUrl);
 
     return (
       <div className="apiLink">

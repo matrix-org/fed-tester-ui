@@ -110,7 +110,7 @@ let App = create({
         <div className="tldr">
           {this.state.tldr}
         </div>
-        <TestResults json={this.state.json}/>
+        <TestResults json={this.state.json} serverName={this.state.ref.value.toLowerCase()}/>
       </>
     }
 
@@ -153,6 +153,7 @@ let TestResults = create({
         <ConnectionErrors json={this.props.json.ConnectionErrors}/>
         <ConnectionReports json={this.props.json.ConnectionReports}/>
         <DNSResult json={this.props.json.DNSResult}/>
+        <API serverName={this.props.serverName}/>
       </div>
     );
   }
@@ -456,6 +457,34 @@ let DNSResult = create({
           {addresses}
           {errors}
         </div>
+      </div>
+    );
+  }
+});
+
+let API = create({
+  displayName: "API",
+
+  render: function() {
+    let url = window.location.href;
+
+    // Remove index.html from the end if present
+    const index_filepath = "index.html";
+    if (url.endsWith(index_filepath)) {
+      url = url.substring(0, url.length - index_filepath.length);
+    }
+
+    // Remove trailing slash if present
+    if (url.endsWith("/")) {
+      url = url.substring(0, url.length - 1);
+    }
+
+    // Add API endpoint to the end
+    url += "/api/report?server_name=" + this.props.serverName;
+
+    return (
+      <div className="apiLink">
+        View the <a href={url}>json report</a>.
       </div>
     );
   }

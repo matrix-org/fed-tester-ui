@@ -94,6 +94,7 @@ let App = create({
 
   render: function() {
     let result
+    let version
     let errors
     let active = ""
 
@@ -111,6 +112,21 @@ let App = create({
           {this.state.tldr}
         </div>
         <TestResults json={this.state.json}/>
+      </>
+
+      // Display server version information
+      const serverVersion = this.state.json.Version;
+      let versionText;
+      if (serverVersion == undefined) {
+        versionText = "This homeserver does not supply version information"
+      } else if (serverVersion.error != undefined) {
+        versionText = serverVersion.error;
+      } else {
+        versionText = serverVersion.name + " " + serverVersion.version;
+      }
+      
+      version = <>
+        <p>Version information: {versionText}</p>
       </>
     }
 
@@ -137,6 +153,7 @@ let App = create({
             <div className="sk-cube sk-cube9"></div>
           </div>
         </div>
+        {version}
         {result}
         {errors}
       </div>

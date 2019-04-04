@@ -466,12 +466,9 @@ let API = create({
   displayName: "API",
 
   render: function() {
-    // Add API endpoint to the end
-    const url = urllib.format(apiUrl);
-
     return (
       <div className="apiLink">
-        View the <a href={url}>json report</a>.
+        View the <a href={urllib.format(apiUrl)}>json report</a>.
       </div>
     );
   }

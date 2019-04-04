@@ -12,7 +12,8 @@ const urllib = require('url')
 
 const icons = require('./icons.js')
 
-let apiUrl = urllib.parse("https://matrix.org/federationtester/api/report")
+let api = "https://matrix.org/federationtester/api/report"
+let apiUrl = urllib.parse(api)
 let options = {retries: 5, retryDelay: 200}
 
 let App = create({
@@ -466,21 +467,8 @@ let API = create({
   displayName: "API",
 
   render: function() {
-    let url = window.location.href;
-
-    // Remove index.html from the end if present
-    const index_filepath = "index.html";
-    if (url.endsWith(index_filepath)) {
-      url = url.substring(0, url.length - index_filepath.length);
-    }
-
-    // Remove trailing slash if present
-    if (url.endsWith("/")) {
-      url = url.substring(0, url.length - 1);
-    }
-
     // Add API endpoint to the end
-    url += "/api/report?server_name=" + this.props.serverName;
+    const url = api + "?server_name=" + this.props.serverName;
 
     return (
       <div className="apiLink">

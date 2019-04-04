@@ -153,6 +153,7 @@ let TestResults = create({
         <ConnectionErrors json={this.props.json.ConnectionErrors}/>
         <ConnectionReports json={this.props.json.ConnectionReports}/>
         <DNSResult json={this.props.json.DNSResult}/>
+        <API/>
       </div>
     );
   }
@@ -456,6 +457,18 @@ let DNSResult = create({
           {addresses}
           {errors}
         </div>
+      </div>
+    );
+  }
+});
+
+let API = create({
+  displayName: "API",
+
+  render: function() {
+    return (
+      <div className="apiLink">
+        View the <a href={urllib.format(apiUrl)}>json report</a>.
       </div>
     );
   }

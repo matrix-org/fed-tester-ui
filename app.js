@@ -94,7 +94,6 @@ let App = create({
 
   render: function() {
     let result
-    let version
     let errors
     let active = ""
 

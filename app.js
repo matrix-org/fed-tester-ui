@@ -103,30 +103,32 @@ let App = create({
     }
 
     if (this.state.json != undefined) {
+      // Display server version information
+      const serverVersion = this.state.json.Version;
+      let version;
+      if (serverVersion == undefined) {
+        version = "This homeserver does not supply version information"
+      } else if (serverVersion.error != undefined) {
+        version = "There was an error looking up homserver version information: serverVersion.error";
+      } else {
+        version = `Homeserver version: ${serverVersion.name} ${serverVersion.version}`;
+      }
+
       let reportCount = Object.keys(this.state.json.ConnectionReports).length
       result = <>
         Got {reportCount} connection report{reportCount > 1 && <>s</>}.
         {reportCount == 0 && <> This usually means at least one error happened.</>}
 
+        {reportCount > 0 &&
+          <div className="serverVersion">
+            <p>{version}</p>
+          </div>
+        }
+
         <div className="tldr">
           {this.state.tldr}
         </div>
         <TestResults json={this.state.json}/>
-      </>
-
-      // Display server version information
-      const serverVersion = this.state.json.Version;
-      let versionText;
-      if (serverVersion == undefined) {
-        versionText = "This homeserver does not supply version information"
-      } else if (serverVersion.error != undefined) {
-        versionText = serverVersion.error;
-      } else {
-        versionText = serverVersion.name + " " + serverVersion.version;
-      }
-      
-      version = <>
-        <p>Version information: {versionText}</p>
       </>
     }
 
@@ -153,7 +155,6 @@ let App = create({
             <div className="sk-cube sk-cube9"></div>
           </div>
         </div>
-        {version}
         {result}
         {errors}
       </div>

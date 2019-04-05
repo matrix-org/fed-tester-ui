@@ -355,7 +355,7 @@ let TableFromObject = create({
       } else if (!this.props.collapsed) {
         if (typeof(this.props.object[check]) == "boolean") {
           return (
-            <div className={`row toggle tree-${this.props.tree} ${this.props.type}Row`} key={id}>
+            <div className={`row tree-${this.props.tree} ${this.props.type}Row`} key={id}>
               <div className="col">{check}</div>
               <div className={"col bool " + className}>{symbol}</div>
             </div>
@@ -370,7 +370,7 @@ let TableFromObject = create({
           }
           return (
             <div key={id}>
-              <div className={"row toggle tree-" + this.props.tree} onClick={this.toggle}>
+              <div className={"row tree-" + this.props.tree} onClick={this.toggle}>
                 <div className="col">{check}</div>
                 <div className={"col bool " + childrenBool}>{childrenSymbol}</div>
               </div>

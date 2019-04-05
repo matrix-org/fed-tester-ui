@@ -352,7 +352,7 @@ let TableFromObject = create({
           }
           return (
             <div key={id}>
-              <div className={"row toggle tree-" + this.props.tree} onClick={this.toggle}>
+              <div className={"row tree-" + this.props.tree} onClick={this.toggle}>
                 <div className="col">{check}</div>
                 <div className={"col bool " + childrenBool}>{childrenSymbol}</div>
               </div>

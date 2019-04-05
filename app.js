@@ -109,7 +109,7 @@ let App = create({
       if (serverVersion == undefined) {
         version = "This homeserver does not supply version information"
       } else if (serverVersion.error != undefined) {
-        version = "There was an error looking up homserver version information: serverVersion.error";
+        version = `There was an error looking up homeserver version information: ${serverVersion.error}`;
       } else {
         version = `Homeserver version: ${serverVersion.name} ${serverVersion.version}`;
       }

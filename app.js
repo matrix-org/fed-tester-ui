@@ -12,7 +12,7 @@ const urllib = require('url')
 
 const icons = require('./icons.js')
 
-let apiUrl = urllib.parse("https://matrix.org/federationtester/api/report")
+let apiUrl = urllib.parse("https://federationtester.matrix.org/api/report")
 let options = {retries: 5, retryDelay: 200}
 
 let App = create({

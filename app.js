@@ -83,6 +83,17 @@ let App = create({
                 ERROR: on {ip}: {msg}
               </div>)
           })
+          if (!report.Checks.MatchingServerName) {
+            tldr.push(
+              <div className="warning" key={`servername-${tldr.length}`}>
+              It is possible that the MatchingServerName error below is
+              caused by you entering the wrong URL in the federation tester,
+              not an actual issue with your federation. You should enter the
+              server name into the Federation Tester, not the location
+              where your server is.
+              </div>
+            )
+          }
         })
         this.setState({
           json: json,

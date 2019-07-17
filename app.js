@@ -84,17 +84,22 @@ let App = create({
               </div>)
           })
           if (!report.Checks.MatchingServerName) {
-            tldr.push(
+            
+          }
+        })
+        if (Object.values(json.ConnectionReports).some(e=>!e.Checks.MatchingServerName)) {
+          tldr.push(
               <div className="warning" key={`servername-${tldr.length}`}>
               It is possible that the MatchingServerName error below is
               caused by you entering the wrong URL in the federation tester,
-              not an actual issue with your federation. You should enter the
-              server name into the Federation Tester, not the location
-              where your server is.
+              not because there is an actual issue with your federation.
+              You should enter the server name into the Federation Tester,
+              not the location where your server is. The server name is the
+              public facing name of your server that appears at the end of
+              usernames and room aliases.
               </div>
             )
-          }
-        })
+        }
         this.setState({
           json: json,
           tldr: tldr,

@@ -83,9 +83,6 @@ let App = create({
                 ERROR: on {ip}: {msg}
               </div>)
           })
-          if (!report.Checks.MatchingServerName) {
-            
-          }
         })
         if (Object.values(json.ConnectionReports).some(e=>!e.Checks.MatchingServerName)) {
           tldr.push(

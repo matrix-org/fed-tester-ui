@@ -50,6 +50,8 @@ let App = create({
   },
 
   submit: function() {
+    window.location.hash = this.state.ref.value.toLowerCase();
+
     let url = Object.assign(apiUrl, {
       query: {
         server_name: this.state.ref.value.toLowerCase()
@@ -148,12 +150,12 @@ let App = create({
       <div className="block">
         <div className="text">
           The Matrix Federation Tester can help debug your Matrix instance.<br />
-          Enter your homeserver hostname in the field below, then hit "Go" to get your report.<br/><br/>
-          Made with love by <a href="https://f.0x52.eu">f0x</a>, sourcecode <a href="https://git.lain.haus/f0x/fed-tester">here</a>, powered by the <a href="https://github.com/matrix-org/matrix-federation-tester">matrix-federation-tester</a> backend <br/>
+          Enter your server name in the field below, then hit "Go" to get your report.<br/><br/>
+          Made with love by <a href="https://f.0x52.eu">f0x</a>, sourcecode <a href="https://github.com/matrix-org/fed-tester-ui">here</a>, powered by the <a href="https://github.com/matrix-org/matrix-federation-tester">matrix-federation-tester</a> backend <br/>
       <a href="https://liberapay.com/f0x/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"/></a>
         </div>
         <div className="input">
-          <input ref={this.setRef}/>
+          <input ref={this.setRef} placeholder="servername.com"/>
           <div className={"sk-cube-grid" + active} onClick={this.submit}>
             <span>Go</span>
             <div className="sk-cube sk-cube1"></div>

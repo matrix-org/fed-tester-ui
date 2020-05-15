@@ -50,7 +50,7 @@ let App = create({
   },
 
   submit: function() {
-  window.location.hash = this.state.ref.value.toLowerCase();
+    window.location.hash = this.state.ref.value.toLowerCase();
 
     let url = Object.assign(apiUrl, {
       query: {

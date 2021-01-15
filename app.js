@@ -404,6 +404,15 @@ let DNSResult = create({
 
   render: function() {
     let j = this.props.json;
+
+    if (j.SRVSkipped) {
+      return (
+        <div className="dns">
+          <h2>.well-known information found -&gt; SRV record-check skipped</h2>
+        </div>
+      );
+    }
+
     if (j.SRVRecords == null) {
       return (
         <div className="dns">

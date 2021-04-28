@@ -408,7 +408,7 @@ let DNSResult = create({
     if (j.SRVSkipped) {
       return (
         <div className="dns">
-          <h2>.well-known information found -&gt; SRV record-check skipped</h2>
+          <h2>server name/.well-known result contains explicit port number: no SRV lookup done</h2>
         </div>
       );
     }

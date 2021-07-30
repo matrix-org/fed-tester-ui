@@ -405,45 +405,64 @@ let DNSResult = create({
   render: function() {
     let j = this.props.json;
 
+    let dnsResultTitle = <> <h3>DNS records for {j.SRVCName}</h3> </>
     if (j.SRVSkipped) {
-      return (
-        <div className="dns">
-          <h2>server name/.well-known result contains explicit port number: no SRV lookup done</h2>
-        </div>
-      );
+        dnsResultTitle = <>
+          <h3>DNS records</h3>
+          <p>server name/.well-known result contains explicit port number: no SRV lookup done</p>
+        </>;
     }
 
-    if (j.SRVRecords == null) {
-      return (
-        <div className="dns">
-          <h2>No SRV Records</h2>
-        </div>
-      );
+    let records;
+    if (j.SRVRecords != null) {
+      const recordRows = j.SRVRecords.map((record, id) => {
+        return (
+          <div className="row" key={id}>
+            <div className="col">{record.Target}</div>
+            <div className="col">{record.Port}</div>
+            <div className="col">{record.Priority}</div>
+            <div className="col">{record.Weight}</div>
+          </div>
+        );
+      });
+      records = <>
+          <div className="header">
+            <span className="col">Target</span>
+            <span className="col">Port</span>
+            <span className="col">Priority</span>
+            <span className="col">Weight</span>
+          </div>
+          <div className="body">
+            {recordRows}
+          </div>
+        </>;
     }
-
-    let records = j.SRVRecords.map((record, id) => {
-      return (
-        <div className="row" key={id}>
-          <div className="col">{record.Target}</div>
-          <div className="col">{record.Port}</div>
-          <div className="col">{record.Priority}</div>
-          <div className="col">{record.Weight}</div>
-        </div>
-      );
-    });
 
     let hosts = Object.keys(j.Hosts).map((host) => {
       if (j.Hosts[host].Addrs != null) {
-        return j.Hosts[host].Addrs.map((address, id) => {
+        const addresses = j.Hosts[host].Addrs.map((address, id) => {
           return (
             <div className="row" key={id}>
               <div className="col">{address}</div>
             </div>
           );
         });
+
+        return (
+          <>
+            <h3>{host}</h3>
+            <div className="head">
+                Addresses
+            </div>
+            <div className="body">
+              {addresses}
+            </div>
+          </>
+        );
       }
     });
-    hosts = hosts.filter((host) => host != undefined)
+
+    hosts = hosts.filter((host) => host != undefined);
 
     let hostErrors = Object.keys(j.Hosts).map((host) => {
       if (j.Hosts[host].Error != null) {
@@ -451,22 +470,10 @@ let DNSResult = create({
           <div className="row" key={host}>
             <div className="col">{j.Hosts[host].Error.Message}</div>
           </div>
-        )
+        );
       }
     });
-    hostErrors = hostErrors.filter((error) => error != undefined)
-
-    let addresses;
-    if (hosts.length > 0) {
-      addresses = <>
-        <div className="head">
-          Addresses
-        </div>
-        <div className="body">
-          {hosts}
-        </div>
-      </>
-    }
+    hostErrors = hostErrors.filter((error) => error != undefined);
 
     let errors;
     if (hostErrors.length > 0) {
@@ -477,25 +484,19 @@ let DNSResult = create({
         <div className="body error">
           {hostErrors}
         </div>
-      </>
+      </>;
     }
 
     return (
       <div className="dns">
-        <h2>DNS records for {j.SRVCName}</h2>
+        <h2>DNS results</h2>
+        {dnsResultTitle}
         <div className="table">
-          <div className="header">
-            <span className="col">Target</span>
-            <span className="col">Port</span>
-            <span className="col">Priority</span>
-            <span className="col">Weight</span>
-          </div>
-          <div className="body">
-            {records}
-          </div>
+          {records}
         </div>
         <div className="table">
-          {addresses}
+          <h3>Hosts</h3>
+          {hosts}
           {errors}
         </div>
       </div>

@@ -405,9 +405,9 @@ let DNSResult = create({
   render: function() {
     const j = this.props.json;
 
-    const skippedDnsResultTitle = <p>server name/.well-known result contains explicit port number: no SRV lookup done</p>;
-    const foundDnsResultTitle = <h3>DNS records for {j.SRVCName}</h3>;
-    const dnsResultTitle = j.SRVSkipped ? skippedDnsResultTitle : foundDnsResultTitle;
+    const skippedSrvResultTitle = <p>server name/.well-known result contains explicit port number: no SRV lookup done</p>;
+    const foundSrvResultTitle = <h3>DNS records for {j.SRVCName}</h3>;
+    const srvResultTitle = j.SRVSkipped ? skippedSrvResultTitle : foundSrvResultTitle;
 
     const srvRecordsTable = function() {
       if (j.SRVRecords != null) {
@@ -509,7 +509,7 @@ let DNSResult = create({
     return (
       <div className="dns">
         <h2>DNS results</h2>
-        {dnsResultTitle}
+        {srvResultTitle}
         {srvRecordsTable}
         <div className="table">
           <h3>Hosts</h3>

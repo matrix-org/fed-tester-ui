@@ -441,67 +441,53 @@ let DNSResult = create({
     }();
 
     const hosts = Object.keys(j.Hosts).map((host) => {
-      const addresses = function() {
-        if (j.Hosts[host].Addrs != null) {
-          return j.Hosts[host].Addrs.map((address, id) => {
-            return (
-              <div className="row" key={id}>
-                <div className="col">{address}</div>
-              </div>
-            );
-          })
-        }
-      }();
+      const addressTable = function() {
+        const addresses = function() {
+          if (j.Hosts[host].Addrs != null) {
+            return j.Hosts[host].Addrs.map((address, id) => {
+              return (
+                <div className="row" key={id}>
+                  <div className="col">{address}</div>
+                </div>
+              );
+            });
+          }
+        }();
 
-      const errors = function() {
-        if (j.Hosts[host].Error != null) {
-          return (
-            <div className="row" key={host}>
-              <div className="col">{j.Hosts[host].Error.Message}</div>
-            </div>
-          );
-        }
-      }();
-
-      const header = <h4>{host}</h4>;
-      const addressTable = <>
+        return (<>
             <div className="head">
                 Addresses
             </div>
             <div className="body">
               {addresses}
             </div>
-          </>;
-      const errorTable = <>
-          <div className="head error">
-            Errors
-          </div>
-          <div className="body error">
-            {errors}
-          </div>
-        </>;
+          </>);
+      }();
 
-      // Prevent having an empty table with only the header of the address or errors table.
-      if (addresses == undefined) {
-        return (
-          <>
-            {header}
-            {errorTable}
-          </>
-        );
-      } else if (errors == undefined) {
-        return (
-          <>
-            {header}
-            {addressTable}
-          </>
-        );
-      }
+      const errorTable = function() {
+        if (j.Hosts[host].Error != null) {
+          return (<>
+            <div className="head error">
+              Errors
+            </div>
+            <div className="body error">
+              <div className="row" key={host}>
+                <div className="col">{j.Hosts[host].Error.Message}</div>
+              </div>
+            </div>
+          </>);
+        }
+      }();
+
       return (
         <>
-          {header}
-          {addressTable}
-          {errorTable}
+          <h4>{host}</h4>
+          <div className="table">
+           {addressTable}
+          </div>
+          <div className="table">
+            {errorTable}
+          </div>
         </>
       );
     });
@@ -511,10 +497,8 @@ let DNSResult = create({
         <h2>DNS results</h2>
         {srvResultTitle}
         {srvRecordsTable}
-        <div className="table">
-          <h3>Hosts</h3>
-          {hosts}
-        </div>
+        <h3>Hosts</h3>
+        {hosts}
       </div>
     );
   }

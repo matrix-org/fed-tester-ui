@@ -36,7 +36,6 @@
     "gulp-copy": "^4.0.1",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^5.0.3",
-    "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-util": "^3.0.8",
     "jdenticon": "^2.1.1",
@@ -45,5 +44,9 @@
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "webpack": "^4.27.1"
+  },
+  "devDependencies": {
+    "gulp-sass": "^5.0.0",
+    "sass": "^1.39.0"
   }
 }

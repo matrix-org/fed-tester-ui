@@ -6,6 +6,8 @@ $green: #36b300;
 $orange: #b35f00;
 $blue: #008fb3;
 
+@use "sass:math";
+
 @font-face {
   font-family: "Roboto Mono";
   src: url(RobotoMono-Regular.ttf) format("truetype");
@@ -198,8 +200,8 @@ input {
   }
 
   .sk-cube {
-    width: (100% / 3);
-    height: (100% / 3);
+    width: math.div(100%, 3);
+    height: math.div(100%, 3);
     background-color: white;
     float: left;
   }

@@ -403,92 +403,102 @@ let DNSResult = create({
   displayName: "DNS",
 
   render: function() {
-    let j = this.props.json;
-    if (j.SRVRecords == null) {
-      return (
-        <div className="dns">
-          <h2>No SRV Records</h2>
-        </div>
-      );
-    }
+    const j = this.props.json;
 
-    let records = j.SRVRecords.map((record, id) => {
-      return (
-        <div className="row" key={id}>
-          <div className="col">{record.Target}</div>
-          <div className="col">{record.Port}</div>
-          <div className="col">{record.Priority}</div>
-          <div className="col">{record.Weight}</div>
-        </div>
-      );
-    });
-
-    let hosts = Object.keys(j.Hosts).map((host) => {
-      if (j.Hosts[host].Addrs != null) {
-        return j.Hosts[host].Addrs.map((address, id) => {
+    const srvRecordsTable = function() {
+      if (j.SRVSkipped) {
+        return <p>server name/.well-known result contains explicit port number: no SRV lookup done</p>;
+      } else if (j.SRVRecords == null) {
+        return <p>No SRV records found</p>;
+      } else {
+        const recordRows = j.SRVRecords.map((record, id) => {
           return (
             <div className="row" key={id}>
-              <div className="col">{address}</div>
+              <div className="col">{record.Target}</div>
+              <div className="col">{record.Port}</div>
+              <div className="col">{record.Priority}</div>
+              <div className="col">{record.Weight}</div>
             </div>
           );
         });
-      }
-    });
-    hosts = hosts.filter((host) => host != undefined)
 
-    let hostErrors = Object.keys(j.Hosts).map((host) => {
-      if (j.Hosts[host].Error != null) {
         return (
-          <div className="row" key={host}>
-            <div className="col">{j.Hosts[host].Error.Message}</div>
-          </div>
-        )
+          <>
+            <h3>DNS records for {j.SRVCName}</h3>
+            <div className="table">
+              <div className="header">
+                <span className="col">Target</span>
+                <span className="col">Port</span>
+                <span className="col">Priority</span>
+                <span className="col">Weight</span>
+              </div>
+              <div className="body">
+                {recordRows}
+              </div>
+            </div>
+          </>
+        );
       }
+    }();
+
+    const hosts = Object.keys(j.Hosts).map((host) => {
+      const addressTable = function() {
+        const addresses = function() {
+          if (j.Hosts[host].Addrs != null) {
+            return j.Hosts[host].Addrs.map((address, id) => {
+              return (
+                <div className="row" key={id}>
+                  <div className="col">{address}</div>
+                </div>
+              );
+            });
+          }
+        }();
+
+        return (<>
+            <div className="head">
+                Addresses
+            </div>
+            <div className="body">
+              {addresses}
+            </div>
+          </>);
+      }();
+
+      const errorTable = function() {
+        if (j.Hosts[host].Error != null) {
+          return (<>
+            <div className="head error">
+              Errors
+            </div>
+            <div className="body error">
+              <div className="row" key={host}>
+                <div className="col">{j.Hosts[host].Error.Message}</div>
+              </div>
+            </div>
+          </>);
+        }
+      }();
+
+      return (
+        <>
+          <h4>{host}</h4>
+          <div className="table">
+           {addressTable}
+          </div>
+          <div className="table">
+            {errorTable}
+          </div>
+        </>
+      );
     });
-    hostErrors = hostErrors.filter((error) => error != undefined)
-
-    let addresses;
-    if (hosts.length > 0) {
-      addresses = <>
-        <div className="head">
-          Addresses
-        </div>
-        <div className="body">
-          {hosts}
-        </div>
-      </>
-    }
-
-    let errors;
-    if (hostErrors.length > 0) {
-      errors = <>
-        <div className="head error">
-          Errors
-        </div>
-        <div className="body error">
-          {hostErrors}
-        </div>
-      </>
-    }
 
     return (
       <div className="dns">
-        <h2>DNS records for {j.SRVCName}</h2>
-        <div className="table">
-          <div className="header">
-            <span className="col">Target</span>
-            <span className="col">Port</span>
-            <span className="col">Priority</span>
-            <span className="col">Weight</span>
-          </div>
-          <div className="body">
-            {records}
-          </div>
-        </div>
-        <div className="table">
-          {addresses}
-          {errors}
-        </div>
+        <h2>DNS results</h2>
+        {srvRecordsTable}
+        <h3>Hosts</h3>
+        {hosts}
       </div>
     );
   }

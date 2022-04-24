@@ -466,7 +466,7 @@ let DNSResult = create({
       }();
 
       const errorTable = function() {
-        if (j.Hosts[host].Error != null) {
+        if (j.Hosts != null && j.Hosts[host] != null && j.Hosts[host].Error != null) {
           return (<>
             <div className="head error">
               Errors

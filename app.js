@@ -441,7 +441,7 @@ let DNSResult = create({
       }
     }();
 
-    const hosts = Object.keys(j.Hosts).map((host) => {
+    const hosts = j.Hosts ? Object.keys(j.Hosts).map((host) => {
       const addressTable = function() {
         const addresses = function() {
           if (j.Hosts[host].Addrs != null) {
@@ -491,7 +491,7 @@ let DNSResult = create({
           </div>
         </>
       );
-    });
+    }) : null;
 
     return (
       <div className="dns">

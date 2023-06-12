@@ -83,6 +83,11 @@ gulp.task('js', function() {
     .pipe(gulp.dest('build'))
 })
 
-gulp.task('build', gulp.parallel(['clean', 'assets', 'js', 'sass', function(done) {
+gulp.task("cf", function() {
+  return gulp.src(["public/_headers"])
+    .pipe(gulp.dest('build'))
+})
+
+gulp.task('build', gulp.parallel(['clean', 'assets', 'js', 'sass', 'cf', function(done) {
   done()
 }]))

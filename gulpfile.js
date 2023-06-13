@@ -83,6 +83,7 @@ gulp.task('js', function() {
     .pipe(gulp.dest('build'))
 })
 
+// Adds cloudflare pages files to the build dir
 gulp.task("cf", function() {
   return gulp.src(["public/_headers"])
     .pipe(gulp.dest('build'))

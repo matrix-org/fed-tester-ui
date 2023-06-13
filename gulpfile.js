@@ -23,16 +23,16 @@ let css = gulp.src(cssFiles)
     .pipe(gulp.dest('build'))
 
 gulp.task('watch', function(cb) {
-  budo("app.js", {
+  budo('app.js', {
     live: true,
-    dir: "build",
+    dir: 'build',
     port: 3000,
     browserify: {
       transform: babelify
     }
-  }).on('exit', cb)
-  gulp.watch(cssFiles, gulp.series(["sass"]))
-})
+  }).on('exit', cb);
+  gulp.watch(cssFiles, gulp.series('sass'));
+});
 
 gulp.task("clean", function(done) {
   del.sync('build')
@@ -57,7 +57,7 @@ gulp.task("assets", function() {
 })
 
 gulp.task('js', function() {
-  return gulp.src(['app.js', "components/**/*"])
+  return gulp.src(['app.js', 'components/**/*'])
     .pipe(babel({
       presets: [
         ['@babel/env', {
@@ -65,8 +65,8 @@ gulp.task('js', function() {
         }]
       ]
     }))
-    .pipe(gulp.dest('build'))
-})
+    .pipe(gulp.dest('build'));
+});
 
 gulp.task('js', function() {
   let b = browserify({
@@ -83,11 +83,18 @@ gulp.task('js', function() {
     .pipe(gulp.dest('build'))
 })
 
-gulp.task("cf", function() {
-  return gulp.src(["public/_headers"])
-    .pipe(gulp.dest('build'))
-})
+// Adds Cloudflare Pages files to the build dir
+gulp.task('cf', function() {
+  if (process.env.env && process.env.env.trim() === 'CF_PAGES') {
+    console.log('CF_PAGES is set');
+    return gulp.src(['cloudflare/_headers'])
+      .pipe(gulp.dest('build'));
+  } else {
+    console.log('CF_PAGES not set or has an invalid value');
+    return Promise.resolve();
+  }
+});
 
-gulp.task('build', gulp.parallel(['clean', 'assets', 'js', 'sass', 'cf', function(done) {
-  done()
-}]))
+gulp.task('build', gulp.parallel('clean', 'assets', 'js', 'sass', 'cf', function(done) {
+  done();
+}));

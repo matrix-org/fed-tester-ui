@@ -99,6 +99,12 @@ let App = create({
               </div>
             )
         }
+        if (typeof json.DNSResult.SRVCName === "string" && !json.DNSResult.SRVCName.startsWith("_matrix-fed.")) {
+          tldr.push(<div className="warning" key={`srv-deprecated-${tldr.length}`}>
+            WARN: Deprecated SRV record <code>_matrix</code> in use. Please
+            add an additional SRV record to cover <code>_matrix-fed</code> too.
+          </div>)
+        }
         this.setState({
           json: json,
           tldr: tldr,
